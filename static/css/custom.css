@@ -1,0 +1,29 @@
+body {
+	font-family: monospace;
+	font-size: 100%;
+}
+
+a {
+	color: #fff;
+	text-decoration: none !important;
+	background: #6a6a6a;
+	transition: background 0.8s;
+}
+.zz {	
+	background: #bf0f0f;
+}
+.y {
+	background: #0010d0;
+
+}
+
+a:hover{
+	color: #fff;
+	background: #fff500;
+}
+
+body > div {
+
+	margin: 40vh 10vw;
+	text-transform: uppercase;
+}
