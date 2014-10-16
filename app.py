@@ -19,7 +19,6 @@ app.config['MONGODB_SETTINGS'] = {'HOST':os.environ.get('MONGOLAB_URI'),'DB': 'z
 app.logger.debug("Connecting to MongoLabs")
 db = MongoEngine(app) # connect MongoEngine with Flask App
 
-
 # import data models
 import models
 
@@ -28,15 +27,14 @@ import models
 def index():
 	return render_template("index.html")
 
-
+# archive page
+@app.route("/archive",methods=['GET'])
+def archivePage():
+	return render_template("archive.html")
 
 # start the webserver
 if __name__ == "__main__":
 	app.debug = True
-	
+
 	port = int(os.environ.get('PORT', 5000)) # locally PORT 5000, Heroku will assign its own port
 	app.run(host='0.0.0.0', port=port)
-
-
-
-	
