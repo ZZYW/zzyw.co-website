@@ -1,21 +1,20 @@
 body {
 	font-family: 'Cutive Mono', monospace;
-	font-size: 130%;
+	background: #000;
+	font-size: 120%;
+	color: #fff;
+	text-transform: uppercase;
 }
 
 a {
-	color: #fff;
+	color: #000;
 	text-decoration: none !important;
-	background: #6a6a6a;
+	background: #fff;
 	transition: background 0.8s;
 }
-#temp_home .zz {
-	background: #bf0f0f;
-}
-#temp_home .y {
-	background: #0010d0;
 
-}
+
+
 
 a:hover{
 	color: #fff;
@@ -26,3 +25,9 @@ a:hover{
 	margin: 40vh 10vw;
 	text-transform: lowercase;
 }
+
+#temp_home #just-text {
+	position: fixed;
+
+}
+
