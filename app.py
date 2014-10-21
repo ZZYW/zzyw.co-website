@@ -27,10 +27,15 @@ import models
 def index():
 	return render_template("index.html")
 
-# archive page
-@app.route("/archive",methods=['GET'])
-def archivePage():
-	return render_template("archive.html")
+# about page
+@app.route("/about",methods=['GET'])
+def aboutPage():
+	return render_template("about.html")
+
+# test page
+@app.route("/test", methods=['GET'])
+def tester():
+	return render_template("p3jstest.html")
 
 # start the webserver
 if __name__ == "__main__":

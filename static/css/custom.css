@@ -26,11 +26,3 @@ a:hover{
 	margin: 40vh 10vw;
 	text-transform: lowercase;
 }
-
-/*
-========
-archive page
-=======*/
-#archive_page {
-	max-width: 400px;
-}
