@@ -10,8 +10,8 @@ http://yangwangphilo.com/
 */
 
 
-var page_width = $( document ).width();
-var page_height = $( document ).height();
+var page_width = $( document ).width() ;
+var page_height = $( document ).height() ;
 
 
 
@@ -28,8 +28,9 @@ float rx, ry, rz;
 int seg;
 
 void setup() {
+  frameRate(20);
 
-  size(page_width*0.99, page_height*0.99, P3D); 
+  size(1400, 700, P3D); 
   rx=ry=rz=0;
   seg=0;
   record = false;
@@ -46,8 +47,8 @@ void setup() {
 void draw() {
 
   smooth();
-  background(255);
-  // slider.display();
+  background(240);
+  slider.display();
 
   translate(width/2, height/2, 130);
   scale(100);

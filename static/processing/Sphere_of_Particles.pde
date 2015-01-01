@@ -35,7 +35,8 @@ Slider slider;
 
 
 void setup() {
-  size(window.innerWidth*0.99, window.innerHeight*0.99, P3D);
+ frameRate(20);
+  size(1400,700, P3D);
   connection_weight = 0.7;
   sphere_volume = 0.5;
   sphere_radius= 220;

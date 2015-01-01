@@ -1,50 +1,77 @@
 {% include "header.html" %}
 <body>
-	<h6 id="testsite">Test Site - Building</h6>
 	<div class="fluid-container">
 
-		<div id="header" class="row text-center section">
-
-			<div id="balance-path">
-				<!-- <canvas  data-processing-sources="/static/processing/sketch2.pde"></canvas> -->
-			</div> 
-		
+		<div id="header" class="row text-center">
 			<h4 id="logo">zzyw.co</h4>
 
 			<!-- <img src="/static/img/logo.jpg"> -->
-			  <p><a href="#gallery">projects</a>&nbsp<a href="#about">zz & yw</a>&nbsp<a href="#contact">email</a></p>
+			  <p><a href="#about">zz & yw</a>&nbsp<a href="#contact">email</a></p>
 
 		</div>
 
 		<div class="text-center section row" id="intro">
 		<p>zzyw.co is an art & design studio. zz and yw met at 2012 at New York and they ceated zzyw.co at 2013.<br>
-		zzyw's work coverd web / graphic / interactive / exhibiation design.<br></p>
+		zzyw's work coverd web / graphic / visual identity / interactive / exhibiation design.<br></p>
 		</div>
 
 
-		<div class="row section" id="gallery">
-			<h4 class="year text-center">2014</h4>
-		<div class="col-xs-4 col-xs-offset-2 project-names">
-			<div id="project-brief">
-			<ul>
-				<li>left top: Lyte.</li>
-				<li>right top: CCPC2014</li>
-				<li>bottom left: Corporate Insight</li>
-				<li>bottom Right: WebtheFilm</li>
-			</ul>
-			</div>
+<!-- ================= -->
+		<div class="section row text-center">
+			<div class="balance-sketch">
+				<canvas  data-processing-sources="/static/processing/sketch2.pde"></canvas>
+			</div> 
+			<p class="project-caption">
+			<br>
+			<a target="_blank" href="http://thebalance.heroku.com">BALANCE</a> - Path @ 2013 | Interactive Internet Art
+			<br>
+			( drag slider to interact )
+			</p>
 		</div>
-		<div class="col-xs-4">
-			<div class="thum-grid">
 
-				<img src="/static/img/lyte.png">
+<!-- ================= -->
+		<div class="row section text-center" id="exhibitgrowth">
+			<img src="http://www.yangwang.info/static/img/projects/growth/growth.png">
+			<p class="project-caption">
+			<br>
+			<a target="_blank"  href="https://www.umpquabank.com/exhibit">Exhibit:Growth</a> @ 2014<br>
+
+	"Exhibit:Growth 	is an interactive, immersive exploration of human potential.<br> Inside a stunning geodesic dome, you’ll choreograph a unique visual expression via large-scale, motion-activated digital technology.<br>
+		The exhibit is created by Umpqua Bank, which is inspired by the potential for growth within us all, both as individuals and as a community."</p>
+		</div> 
+<!-- ================= -->
+		<div class="row section text-center" id="websites">
+			<div class="thum-grid col-md-6 col-xs-12">
+				<img src="/static/img/lyte.png" >
 				<img src="/static/img/ccpc.png">
-				<img src="/static/img/ci.png">
 				<img src="/static/img/webthefilm.png">
+				<img src="/static/img/ci.png">
 			</div>
+			<p class="project-caption col-md-6 col-xs-12 text-left-lg text-left-md">
+				<br>Web Presents @ 2014<br>
+				<a  target="_blank" href="http://lyteup.com">Lyte</a> - New York based start up, focus on online ticket sales;<br>
+				<a  target="_blank" href="http://ccpc2014.org">2014 Columbia China Prospects Conference</a> - A major China-US conference holds by Columbia University annually;<br>
+				<a target="_blank"  href="http://webthefilm.com">Web the Film</a> - An awards winning film produced by Sundial Pictures;<br>
+				<a target="_blank"  href="http://corporateinsight.com">Corporate Insight</a> - New York Based Consulting Company.<br>
+			</p>
 		</div>
-				
+
+<!-- ================= -->
+
+		<div class="section row text-center">
+			<div class="balance-sketch">
+				<canvas  data-processing-sources="/static/processing/Sphere_of_Particles.pde"></canvas>
+			</div> 
+			<p class="project-caption">
+			<br>
+			<a target="_blank" href="http://thebalance.heroku.com">BALANCE</a> - Form @ 2013 | Interactive Internet Art
+			<br>
+			( drag slider to interact )
+			</p>
 		</div>
+
+
+
 
 	</div>
 

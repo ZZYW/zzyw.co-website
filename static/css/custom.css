@@ -1,64 +1,60 @@
 body {
+	font-family: sans-serif;
+	font-size: 110%;
+}
+canvas:focus{
+	outline: none;
+	border:none;
+}
 
-	font-size: 130%;
-}
-#testsite{
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	opacity: 0.6;
-}
+
 a {
-	padding: 0 4px;
+	padding: 0 2px;
 	background-color: #000;
 	color: #fff !important;
 	transition: background-color 0.5s, color 0.5s;
 }
 
 .section{
-	margin: 3em 0;
+	margin: 10em 0;
 }
-.year{
 
-}
 a:hover{
 	text-decoration: none;
 	background-color: #8A612A;
 	color: #fff !important;
 }
 
-#start-sketch {
-	position: absolute;
-	left: 0;
-	top: 0;
+#exhibitgrowth img {
+	width: 40%;
+}
+.balance-sketch {
+	margin: 0 auto;
+}
+.balance-sketch canvas{
+	width: 60%;
+	z-index: -1000;
 }
 #header img{
 	width: 20%;
 	margin: 4em;
 }
 
-#header h6{
-	/*opacity: 0.4;*/
-}
-
 #header a{
 	color: #000;
 }
 
-
 .thum-grid{
-	width: auto;
-	/*padding: 1em;*/
-	/*background-color: #002FA7;*/
 }
+
 .thum-grid img{
-	/*border: 1px solid #000;*/
-	width: 7em;
-	margin: 1em;
-	-webkit-filter:grayscale(80%) ; 	
+
+	width: 20%;	
+	margin: 0.3em;
+	/*-webkit-filter: brightness(60%) ; 	*/
 	transition: -webkit-filter 1s;
 }
 .thum-grid img:hover{
-	-webkit-filter:grayscale(0%);
+	/*-webkit-filter: brightness(100%) ;*/
 }
 
