@@ -1,19 +1,51 @@
 {% include "header.html" %}
-
-
 <body>
-	<div id="temp_home">
 
-		<div  id="just-text" class="text-center">
-			<h3>site building.......</h3>
-			<h6>you can check <a class="y" href="http://yangwang.info">yang wang's website</a> and <a class="zz" href="http://zhenzhenqi.info">zhenzhen qi's website</a></h6>
-			<h6>You can also <a href="mailto:zhenzhenqi@gmail.com">email us</a></h6>
+	<div class="fluid-container">
+
+		<div id="header" class="row text-center">
+
+			<div id="balance-path">
+				<!-- <canvas  data-processing-sources="/static/processing/sketch2.pde"></canvas> -->
+			</div> 
+		
+				<h5>zzyw.co</h5>
+			<!-- <img src="/static/img/logo.jpg"> -->
+			  <h5><a href="#gallery">projects</a>&nbsp<a href="#about">zz & yw</a>&nbsp<a href="#contact">email</a></h5>
+
 		</div>
 
-		
-		<div id="cn1"></div>
+		<div class="text-center section row" id="intro">
+		<p>zzyw is an art & design studio. zz and yw met at 2012 at New York and they ceated it at 2013.<br>
+		zzyw's work coverd web / graphic / exhibiation design.</p>
+		</div>
+
+
+		<div class="row section" id="gallery">
+			<h4 class="year text-center">2014</h4>
+		<div class="col-xs-4 col-xs-offset-2 project-names">
+			<div id="project-brief">
+			<ul>
+				<li>left top: Lyte.</li>
+				<li>right top: CCPC2014</li>
+				<li>bottom left: Corporate Insight</li>
+				<li>bottom Right: WebtheFilm</li>
+			</ul>
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<div class="thum-grid">
+				<img src="/static/img/lyte.png">
+				<img src="/static/img/ccpc.png">
+				<img src="/static/img/ci.png">
+				<img src="/static/img/webthefilm.png">
+			</div>
+		</div>
+				
+		</div>
 
 	</div>
-	 <script type="text/javascript" src="static/js/p5SketchOne.js"></script>
-	 {% include "trackingcode.html" %}
+
+
+	{% include "trackingcode.html" %}
 </body>

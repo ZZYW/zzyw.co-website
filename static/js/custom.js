@@ -1,20 +1,21 @@
 var winWidth, winHeight;
+var imgarray;
 
 $(document).ready(function(){
 	winWidth = $(window).width();
 	winHeight = $(window).height();
-	centerTextBlock();
-	console.log(winWidth/2 - $('#just-text')/2);
+
+	imgarray = $('.project-thum');
+
+	for (var i = imgarray.length - 1; i >= 0; i--) {
+
+		var dice = Math.random();
+	
+	};
 })
 
 $(window).resize(function(){
 	winWidth = $(window).width();
 	winHeight = $(window).height();
-	centerTextBlock();
 })
 
-
-function centerTextBlock(){
-	$('#just-text').css("margin-left", winWidth/2 - $('#just-text').width()/2);
-	$('#just-text').css("margin-top", winHeight/2 - $('#just-text').height()/2);
-}

@@ -32,10 +32,6 @@ def index():
 def aboutPage():
 	return render_template("about.html")
 
-# test page
-@app.route("/test", methods=['GET'])
-def tester():
-	return render_template("p3jstest.html")
 
 # start the webserver
 if __name__ == "__main__":
