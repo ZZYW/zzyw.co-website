@@ -1,7 +1,12 @@
 body {
-	/*font-family: 'Nixie One', cursive;*/
-	min-width: 1000px;
-	font-size: 100%;
+
+	font-size: 130%;
+}
+#testsite{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	opacity: 0.6;
 }
 a {
 	padding: 0 4px;
@@ -9,8 +14,9 @@ a {
 	color: #fff !important;
 	transition: background-color 0.5s, color 0.5s;
 }
+
 .section{
-	margin: 5em 0;
+	margin: 3em 0;
 }
 .year{
 
@@ -30,6 +36,7 @@ a:hover{
 	width: 20%;
 	margin: 4em;
 }
+
 #header h6{
 	/*opacity: 0.4;*/
 }
