@@ -13,16 +13,16 @@ a {
 	color: #fff !important;
 	/*transition: background-color 0.5s, color 0.5s;*/
 }
-
+a:hover{
+	text-decoration: none;
+	background-color: #847B7E;
+	color: #fff !important;
+}
 .section{
 	margin: 13em 0;
 }
 
-a:hover{
-	text-decoration: none;
-	background-color: #8A612A;
-	color: #fff !important;
-}
+
 
 #exhibitgrowth img {
 	width: 40%;
@@ -68,4 +68,25 @@ a:hover{
 #graphicdesigns p{
 	clear: both;
 }
+
+#ywintro {
+	
+}
+#ywintro::after{
+	content: "================";
+	color: #1D25BD;
+	background-color: #1D25BD;
+}
+#ywintro a:hover {
+	background-color: #1D25BD;
+}
+#zzintro::after{
+	content: "================";
+	color: #8a612a;
+	background-color: #8a612a;
+}
+#zzintro a:hover{
+	background-color: #8a612a;
+}
+
 
