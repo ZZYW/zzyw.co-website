@@ -19,11 +19,35 @@ a:hover{
 	color: #fff !important;
 }
 .section{
-	margin: 13em 0;
+	margin: 16em 0;
 }
 
+/*loading page*/
+#loadingpage{
+	position: fixed;
+	left: 0;
+	top: 0;
+	color: #fff;
+	text-align: center;
+	z-index: 1000;
+	width: 100vw;
+	height: 100vh;
+}
+#cn1{
+	position: fixed;
+	left: 0;
+	top: 0;
+}
 
+/*=====================*/
 
+#stopmusic {
+	position: fixed;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+	z-index: 500;
+}
 #exhibitgrowth img {
 	width: 40%;
 }
@@ -31,7 +55,7 @@ a:hover{
 	margin: 0 auto;
 }
 .balance-sketch canvas{
-	width: 60%;
+	width: 70%;
 	z-index: -1000;
 }
 #header img{

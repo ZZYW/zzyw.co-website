@@ -1,12 +1,23 @@
 {% include "header.html" %}
 <body>
+
+	<div id="loadingpage">
+		<p>Loading...</p>
+		<div id="cn1"></div>
+		<script type="text/javascript" src="static/js/p5SketchOne.js"></script>
+	</div>
+
 	<div class="fluid-container">
+
+<!-- ================= -->
 
 		<div id="header" class="row text-center">
 			<h4 id="logo">zzyw.co</h4>
 
 			<!-- <img src="/static/img/logo.jpg"> -->
 			  <p><a href="#about">zz & yw</a>&nbsp<a href="#contact">email</a></p>
+
+
 
 		</div>
 
@@ -15,6 +26,16 @@
 		Zzyw's work involved in the field of web / graphic / visual identity / interactive / exhibiation design.<br></p>
 		</div>
 
+<!-- ================= -->
+		<div id="music">
+			<audio id="player" autoplay loop>
+				<source src="/static/audio/backgroundmusic.mp3" type="audio/mpeg">
+			</audio>
+
+			<a id="stopmusic">
+				<span>toggle music</span>
+			</a>
+		</div>
 <!-- ================= -->
 		<div class="section row text-center">
 			<div class="balance-sketch">
@@ -42,7 +63,7 @@
 <!-- ================= -->
 
 <div class="row section text-center" id="acalogo">
-	<video autoplay loop  width="640" height="360">
+	<video autoplay loop muted width="640" height="360">
 	  <source src="https://s3-us-west-2.amazonaws.com/cunchuvideo/aca.mp4.mp4" type="video/mp4">
 	  <source src="https://s3-us-west-2.amazonaws.com/cunchuvideo/aca.oggtheora.ogv" type="video/ogg">
 	  Preview not available. Your browser does not support the video tag.
@@ -131,7 +152,7 @@
 <!-- ================= -->
 
 <div class="section row text-center" id="contact">
-	<p>Please direct all inquiries to contact@zzyw.co</p>
+	<p>Please direct all inquiries to zhenzhenqi@gmail.com</p>
 </div>
 
 

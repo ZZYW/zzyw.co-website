@@ -20,6 +20,8 @@ function setup() {
 
 function draw() {
 	background(0);
+  noStroke();
+  text("zzyw.co loading...",windowWidth/2,windowHeight/2);
 	fill(255);
 	//text("Click mouse to generate a new tree", 10, height-20);
 	stroke(255);
@@ -41,6 +43,7 @@ function mousePressed() {
 
 function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
+  background(0);
 }
 
 function branch(h, xoff) {
