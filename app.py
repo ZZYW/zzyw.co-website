@@ -11,7 +11,14 @@ from flask.ext.mongoengine import MongoEngine
 # connect('models')
 
 app = Flask(__name__)   # create our flask app
-app.config['CSRF_ENABLED'] = False
+# app.config['CSRF_ENABLED'] = False
+# app.config['DEBUG'] = True
+
+app.config.update(
+    DEBUG=True,
+    CSRF_ENABLED = False,
+   SEND_FILE_MAX_AGE_DEFAULT = True
+)
 
 # --------- Database Connection ---------
 # MongoDB connection to MongoLab's database
@@ -31,6 +38,11 @@ def index():
 @app.route("/about",methods=['GET'])
 def aboutPage():
 	return render_template("about.html")
+
+@app.after_request
+def add_header(response):
+    response.cache_control.max_age = 300
+    return response
 
 
 # start the webserver
