@@ -16,9 +16,10 @@ app = Flask(__name__)   # create our flask app
 
 app.config.update(
     DEBUG=True,
-    CSRF_ENABLED = False,
-   SEND_FILE_MAX_AGE_DEFAULT = True
+    CSRF_ENABLED = False
 )
+
+app.config['SEND_FILE_MAX_AGE_DEFAULT']
 
 # --------- Database Connection ---------
 # MongoDB connection to MongoLab's database
