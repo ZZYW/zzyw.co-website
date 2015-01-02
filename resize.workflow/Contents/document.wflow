@@ -52,20 +52,8 @@
 				<dict>
 					<key>fileNames</key>
 					<array>
-						<string>~/Documents/zzywcoweb/static/img/graphics/balance/1.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/balance/2.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/balance/3.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/eatery2.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/happinesswy.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/iamhere.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/internationaleducation.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/itpshow.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/lucidintervals.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/notagame.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/pier69.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/richstone.gif</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/balance/4.jpg</string>
-						<string>~/Documents/zzywcoweb/static/img/graphics/balance/5.jpg</string>
+						<string>~/Documents/zzywcoweb/static/img/bookofhappiness/img_1040.jpg</string>
+						<string>~/Documents/zzywcoweb/static/img/bookofhappiness/img_1036.jpg</string>
 					</array>
 				</dict>
 				<key>BundleIdentifier</key>
@@ -83,7 +71,7 @@
 				<key>Class Name</key>
 				<string>SpecifiedFilesAction</string>
 				<key>InputUUID</key>
-				<string>612A8369-158F-4649-999B-03917892C1C8</string>
+				<string>1C2E0C5B-9805-4AE8-85A3-01B8E00155A7</string>
 				<key>Keywords</key>
 				<array>
 					<string>File</string>
@@ -92,9 +80,9 @@
 					<string>Get</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>A77C1C53-7FB2-4A07-A491-F9FAF8636897</string>
+				<string>4333A792-B781-4BE9-8491-81EE4412AE5C</string>
 				<key>UUID</key>
-				<string>FAA48408-9A9E-4A8F-BCD4-35E23D115C63</string>
+				<string>5EF537F1-C8C4-4FD1-8F7B-0886FA4B568B</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Finder</string>
@@ -180,7 +168,7 @@
 					<key>scaleValue</key>
 					<integer>0</integer>
 					<key>sizeValue</key>
-					<integer>230</integer>
+					<integer>600</integer>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.ScaleImage</string>
@@ -268,8 +256,6 @@
 						<string>3</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
@@ -283,10 +269,10 @@
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>92FED393-1123-48CE-9F26-1278DAB252B1</key>
+		<key>504F3531-9075-4D3C-ADAC-479B3FEFB481</key>
 		<dict>
 			<key>from</key>
-			<string>FAA48408-9A9E-4A8F-BCD4-35E23D115C63 - FAA48408-9A9E-4A8F-BCD4-35E23D115C63</string>
+			<string>5EF537F1-C8C4-4FD1-8F7B-0886FA4B568B - 5EF537F1-C8C4-4FD1-8F7B-0886FA4B568B</string>
 			<key>to</key>
 			<string>8058EF8F-BD98-440C-B5F5-A325DE520AE9 - 8058EF8F-BD98-440C-B5F5-A325DE520AE9</string>
 		</dict>

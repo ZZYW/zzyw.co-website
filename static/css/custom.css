@@ -77,6 +77,10 @@ a:hover{
 	
 }
 
+#bookofhappiness img{
+	margin: 0 auto;
+	padding: 1em;
+}
 
 #graphicdesigns img{
 /*	-webkit-filter: brightness(30%);
@@ -93,9 +97,7 @@ a:hover{
 	clear: both;
 }
 
-#ywintro {
-	
-}
+
 #ywintro::after{
 	content: "================";
 	color: #1D25BD;
