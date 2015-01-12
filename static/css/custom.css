@@ -125,3 +125,8 @@ a:hover {
     right: 5em;
     top: 5em;
 }
+
+#lyte-vi iframe{
+    width: 600px;
+    height: 600px;    
+}
