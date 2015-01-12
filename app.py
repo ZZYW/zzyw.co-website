@@ -36,9 +36,9 @@ def index():
 	return render_template("index.html")
 
 # about page
-@app.route("/about",methods=['GET'])
-def aboutPage():
-	return render_template("about.html")
+@app.route("/archive",methods=['GET'])
+def archive():
+	return render_template("archive.html")
 
 @app.after_request
 def add_header(response):
