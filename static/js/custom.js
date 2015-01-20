@@ -5,6 +5,7 @@ $(document).ready(function(){
     winWidth = $(window).width();
     winHeight = $(window).height();
 
+
     $('#logo').css('width',
         $('#main-menu').children().eq(1).offset().left + $('#main-menu').children().eq(1).width() - $('#main-menu').offset().left
         );

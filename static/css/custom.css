@@ -51,21 +51,25 @@ a:hover {
 }
 
 #flocking-container {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     z-index: -10000;
+    opacity: 0.9;
 }
+
 #main-menu{
     margin-top: 0.7em;
     font-size: 1.8em;
     font-weight: 200;
 }
 #intro{
-/*    background-color: #000;
-    color: #fff;*/
+    /*color: #fff;*/
     font-size: 1.8em;
     font-weight: 300;
+}
+#intro p span{
+        background-color: #F0F0F0;
 }
 #stopmusic {
     position: fixed;
