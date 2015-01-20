@@ -2,7 +2,7 @@ var winWidth, winHeight;
 
 $(document).ready(function(){
 	$('#loadingpage').remove();
-    var s = skrollr.init();
+    // var s = skrollr.init();
 
 	winWidth = $(window).width();
 	winHeight = $(window).height();
