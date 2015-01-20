@@ -311,7 +311,7 @@
 		<script>
 
 		
-
+		if (window.innerWidth > 768) {
 			var hash = document.location.hash.substr( 1 );
 			if (hash) hash = parseInt(hash, 0);
 
@@ -581,7 +581,7 @@
 			//
 
 			function animate() {
-				if ( Detector.webgl ) {
+				if ( Detector.webgl) {
 					requestAnimationFrame( animate );
 					render();
 				}
@@ -606,5 +606,5 @@
 				renderer.render( scene, camera );
 
 			}
-
+};
 		</script>
