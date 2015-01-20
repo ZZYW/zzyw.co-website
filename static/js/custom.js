@@ -1,11 +1,13 @@
 var winWidth, winHeight;
 
 $(document).ready(function(){
-	$('#loadingpage').remove();
-    // var s = skrollr.init();
 
-	winWidth = $(window).width();
-	winHeight = $(window).height();
+    winWidth = $(window).width();
+    winHeight = $(window).height();
+
+    $('#logo').css('width',
+        $('#main-menu').children().eq(1).offset().left + $('#main-menu').children().eq(1).width() - $('#main-menu').offset().left
+        );
 
 	$('#stopmusic').clickToggle(
 		function () {document.getElementById('player').pause()},
@@ -16,6 +18,12 @@ $(document).ready(function(){
 $(window).resize(function(){
 	winWidth = $(window).width();
 	winHeight = $(window).height();
+
+    $('#logo').css('width',
+    $('#main-menu').children().eq(1).offset().left + $('#main-menu').children().eq(1).width() - $('#main-menu').offset().left
+    );
+
+
 })
 
 (function($) {

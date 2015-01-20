@@ -28,19 +28,28 @@
 	<div class="fluid-container">
 
 <!-- ================= -->
-		<div id="header" class="text-center row">
+		<div id="header" class="text-left row">
 			
-			<div id="logo-image" class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">
-				<img class="img-responsive" src="/static/img/logodesign.png">
+			<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3" >
+
+				<img id="logo" src="/static/img/logodesign.png">
+
+				<p id="main-menu"><a href="#about">zz & yw</a>&nbsp<a href="#contact">contact</a></p>
+
+				<div id="intro">
+				<p>zzyw.co is a New York based design & art studio,<br>
+				specializing in the field of interaction / experience / visual identity design.
+				</p>
+				</div>
+
 			</div>
 
-			<p id="main-menu"class="col-xs-12" ><a href="#about">zz & yw ?</a>&nbsp<a href="#contact">contact</a></p>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script>
+			<script src="/static/libs/Detector.js"></script>
+			<script src="/static/libs/SimulationRenderer.js"></script>
 
-			<div class="text-center col-xs-10 col-xs-offset-1" id="intro">
-			<p>zzyw.co is a New York based art & design studio established in 2013.<br>
-			zzyw's work is involved in the field of web / graphic / visual identity / interaction / exhibition design.<br>
-			<br><i class="fa fa-long-arrow-down"></i>
-			</p>
+			<div id="flocking-container">
+				{% include "flocking.html" %}
 			</div>
 
 		</div>

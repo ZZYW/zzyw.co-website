@@ -14,12 +14,11 @@ a {
     padding: 0 2px;
     background-color: #000;
     color: #fff !important;
-	/*transition: background-color 0.5s, color 0.5s;*/;
 }
 
 a:hover {
     text-decoration: none;
-    background-color: #847B7E;
+    background-color: #CCC9CD;
     color: #fff !important;
 }
 
@@ -47,10 +46,15 @@ a:hover {
 
 /*=====================*/
 #header {
-    margin-top: 15vh;
+    height: 100vh;
+    margin-top: 30vh;
 }
-#logo-image{
-    /*background-color: ;*/
+
+#flocking-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -10000;
 }
 #main-menu{
     margin-top: 0.7em;
@@ -58,7 +62,9 @@ a:hover {
     font-weight: 200;
 }
 #intro{
-    font-size: 3em;
+/*    background-color: #000;
+    color: #fff;*/
+    font-size: 1.8em;
     font-weight: 300;
 }
 #stopmusic {
@@ -116,12 +122,12 @@ a:hover {
 
 #zzintro::after {
     content: "================";
-    color: #8a612a;
-    background-color: #8a612a;
+    color: #f3eed0;
+    background-color: #f3eed0;
 }
 
 #zzintro a:hover {
-    background-color: #8a612a;
+    background-color: #f3eed0;
 }
 
 /*============================================*/
