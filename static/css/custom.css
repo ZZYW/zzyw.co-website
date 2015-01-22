@@ -4,6 +4,10 @@ body {
     background-color: #fff;
 }
 
+*{
+    transition: margin 2s, padding 2s;
+}
+
 canvas:focus {
     outline: none;
     border: none;
@@ -133,6 +137,11 @@ a:hover {
 
 #zzintro a:hover {
     background-color: #f3eed0;
+}
+
+#contact{
+    font-weight: 300;
+    font-size: 2em;
 }
 
 /*============================================*/
