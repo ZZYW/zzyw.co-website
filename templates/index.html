@@ -6,400 +6,411 @@
 	<meta name="keywords" content="ZZYW, YANG WANG, ZHENZHEN QI, Artist, New Media, Interaction, Design, NYC">
 	<meta name="author" content="YANG WANG, ZHENZHEN QI">
 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PRIVATE">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<META HTTP-EQUIV="EXPIRES" CONTENT="Mon, 22 Jul 2015 11:12:01 GMT">
-	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="/static/libs/pace-theme.css">
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/static/libs/bootstrap-theme.css" rel="stylesheet">
-	<link href="/static/libs/font-awesome.min.css" rel="stylesheet">
-	<link href="/static/libs/animate.css" rel="stylesheet">
-	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
-	<link href="/static/css/custom.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/static/libs/bootstrap-align-extend.css">
-	<link rel="stylesheet" type="text/css" href="/static/libs/tabs.css">
-	<!--js-->
-	<script type="text/javascript" src="/static/libs/instantclick.min.js"></script>
-	<script type="text/javascript" src="/static/libs/pace.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<META HTTP-EQUIV="EXPIRES" CONTENT="Mon, 22 Jul 2015 11:12:01 GMT">
+			<!-- css -->
+			<link rel="stylesheet" type="text/css" href="/static/libs/pace-theme.css">
+			<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+			<link href="/static/libs/bootstrap-theme.css" rel="stylesheet">
+			<link href="/static/libs/font-awesome.min.css" rel="stylesheet">
+			<link href="/static/libs/animate.css" rel="stylesheet">
+			<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+			<link href="/static/css/custom.css" rel="stylesheet">
+			<link rel="stylesheet" type="text/css" href="/static/libs/bootstrap-align-extend.css">
+			<link rel="stylesheet" type="text/css" href="/static/libs/tabs.css">
+			<!--js-->
+			<script type="text/javascript" src="/static/libs/instantclick.min.js"></script>
+			<script type="text/javascript" src="/static/libs/pace.min.js"></script>
 
-</head>
+		</head>
 
-<body>
+		<body>
 
-	<div class="fluid-container">
+			<div class="fluid-container">
 
-<!-- ================= -->
-		<div id="header" class="text-left row">
-			
-			<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3" >
+				<!-- ================= -->
+				<div id="header" class="text-left row">
 
-				<img id="logo" src="/static/img/logodesign.png">
+					<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3" >
 
-				<p id="main-menu"><a href="#about">zz & yw</a>&nbsp<a href="#contact">contact</a></p>
+						<img id="logo" src="/static/img/logodesign.png">
 
-				<div id="intro">
-				<p> <span>zzyw.co is a New York based design & art studio,<br>
-				specializing in the field of interaction / experience / visual identity design.<br>↓
-				</span></p>
+						<p id="main-menu"><a href="#about">zz & yw</a>&nbsp<a href="#contact">contact</a></p>
+
+						<div id="intro">
+							<p> <span>zzyw.co is a New York based design & art studio,<br>
+								specializing in the field of interaction / experience / visual identity design.<br>↓
+							</span></p>
+						</div>
+
+					</div>
+
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script>
+					<script src="/static/libs/Detector.js"></script>
+					<script src="/static/libs/SimulationRenderer.js"></script>
+
+					<div id="flocking-container">
+						<!-- pass through vertex shader -->
+						<script id="vertexShader" type="x-shader/x-vertex">
+
+							void main()	{
+
+								gl_Position = vec4( position, 1.0 );
+
+							}
+
+						</script>
+
+						<!-- pass through fragment shader -->
+						<script id="fragmentShader" type="x-shader/x-fragment">
+
+							uniform vec2 resolution;
+							uniform float time;
+							uniform sampler2D texture;
+
+							void main()	{
+
+								vec2 uv = gl_FragCoord.xy / resolution.xy;
+
+								vec3 color = texture2D( texture, uv ).xyz;
+
+								gl_FragColor = vec4( color, 1.0 );
+							}
+
+						</script>
+						<!-- end pass through shaders -->
+
+						<!-- shader for bird's position -->
+						<script id="fragmentShaderPosition" type="x-shader/x-fragment">
+
+							uniform vec2 resolution;
+							uniform float time;
+							uniform float delta;
+							uniform sampler2D textureVelocity;
+							uniform sampler2D texturePosition;
+
+							void main()	{
+
+								vec2 uv = gl_FragCoord.xy / resolution.xy;
+								vec4 tmpPos = texture2D( texturePosition, uv );
+								vec3 position = tmpPos.xyz;
+								vec3 velocity = texture2D( textureVelocity, uv ).xyz;
+
+								float phase = tmpPos.w;
+
+								phase = mod( ( phase + delta +
+									length( velocity.xz ) * delta * 3. +
+									max( velocity.y, 0.0 ) * delta * 6. ), 62.83 );
+
+								gl_FragColor = vec4( position + velocity * delta * 15. , phase );
+
+							}
+
+						</script>
+
+						<!-- shader for bird's velocity -->
+						<script id="fragmentShaderVelocity" type="x-shader/x-fragment">
+
+								uniform vec2 resolution;
+								uniform float time;
+								uniform float testing;
+								uniform float delta; // about 0.016
+								uniform float seperationDistance; // 20
+								uniform float alignmentDistance; // 40
+								uniform float cohesionDistance; //
+								uniform float freedomFactor;
+								uniform vec3 predator;
+
+
+								uniform sampler2D textureVelocity;
+								uniform sampler2D texturePosition;
+
+								const float width = WIDTH;
+								const float height = WIDTH;
+
+								const float PI = 3.141592653589793;
+								const float PI_2 = PI * 2.0;
+								// const float VISION = PI * 0.55;
+
+								float zoneRadius = 40.0;
+								float zoneRadiusSquared = zoneRadius * zoneRadius;
+
+								float separationThresh = 0.45;
+								float alignmentThresh = 0.65;
+
+								const float UPPER_BOUNDS = 400.0;
+								const float LOWER_BOUNDS = -UPPER_BOUNDS;
+
+								const float SPEED_LIMIT = 4.0;
+
+								float rand(vec2 co){
+								return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+								}
+
+								void main()	{
+
+								zoneRadius = seperationDistance + alignmentDistance + cohesionDistance;
+								separationThresh = seperationDistance / zoneRadius;
+								alignmentThresh = ( seperationDistance + alignmentDistance ) / zoneRadius;
+								zoneRadiusSquared = zoneRadius * zoneRadius;
+
+
+								vec2 uv = gl_FragCoord.xy / resolution.xy;
+								vec3 birdPosition, birdVelocity;
+
+								vec3 selfPosition = texture2D( texturePosition, uv ).xyz;
+								vec3 selfVelocity = texture2D( textureVelocity, uv ).xyz;
+
+								float dist;
+								vec3 dir; // direction
+								float distSquared;
+
+								float seperationSquared = seperationDistance * seperationDistance;
+								float cohesionSquared = cohesionDistance * cohesionDistance;
+
+								float f;
+								float percent;
+
+								vec3 velocity = selfVelocity;
+
+								float limit = SPEED_LIMIT;
+
+								dir = predator * UPPER_BOUNDS - selfPosition;
+								dir.z = 0.;
+								// dir.z *= 0.6;
+								dist = length( dir );
+								distSquared = dist * dist;
+
+								float preyRadius = 150.0;
+								float preyRadiusSq = preyRadius * preyRadius;
+
+
+								// move birds away from predator
+								if (dist < preyRadius) {
+
+								f = ( distSquared / preyRadiusSq - 1.0 ) * delta * 100.;
+								velocity += normalize( dir ) * f;
+								limit += 5.0;
+								}
+
+
+								// if (testing == 0.0) {}
+								// if ( rand( uv + time ) < freedomFactor ) {}
+
+
+								// Attract flocks to the center
+								vec3 central = vec3( 0., 0., 0. );
+								dir = selfPosition - central;
+								dist = length( dir );
+
+								dir.y *= 2.5;
+								velocity -= normalize( dir ) * delta * 5.;
+
+								for (float y=0.0;y<height;y++) {
+								for (float x=0.0;x<width;x++) {
+
+								vec2 ref = vec2( x + 0.5, y + 0.5 ) / resolution.xy;
+								birdPosition = texture2D( texturePosition, ref ).xyz;
+
+								dir = birdPosition - selfPosition;
+								dist = length(dir);
+
+								if (dist < 0.0001) continue;
+
+								distSquared = dist * dist;
+
+								if (distSquared > zoneRadiusSquared ) continue;
+
+								percent = distSquared / zoneRadiusSquared;
+
+								if ( percent < separationThresh ) { // low
+
+								// Separation - Move apart for comfort
+								f = (separationThresh / percent - 1.0) * delta;
+								velocity -= normalize(dir) * f;
+
+								} else if ( percent < alignmentThresh ) { // high
+
+								// Alignment - fly the same direction
+								float threshDelta = alignmentThresh - separationThresh;
+								float adjustedPercent = ( percent - separationThresh ) / threshDelta;
+
+								birdVelocity = texture2D( textureVelocity, ref ).xyz;
+
+								f = ( 0.5 - cos( adjustedPercent * PI_2 ) * 0.5 + 0.5 ) * delta;
+								velocity += normalize(birdVelocity) * f;
+
+								} else {
+
+								// Attraction / Cohesion - move closer
+								float threshDelta = 1.0 - alignmentThresh;
+								float adjustedPercent = ( percent - alignmentThresh ) / threshDelta;
+
+								f = ( 0.5 - ( cos( adjustedPercent * PI_2 ) * -0.5 + 0.5 ) ) * delta;
+
+								velocity += normalize(dir) * f;
+
+								}
+
+								}
+
+								}
+
+
+
+								// this make tends to fly around than down or up
+								// if (velocity.y > 0.) velocity.y *= (1. - 0.2 * delta);
+
+								// Speed Limits
+								if ( length( velocity ) > limit ) {
+								velocity = normalize( velocity ) * limit;
+								}
+
+								gl_FragColor = vec4( velocity, 1.0 );
+
+								}
+
+						</script>
+
+						<script type="x-shader/x-vertex" id="birdVS">
+
+							attribute vec2 reference;
+							attribute float birdVertex;
+
+							attribute vec3 birdColor;
+
+							uniform sampler2D texturePosition;
+							uniform sampler2D textureVelocity;
+
+							varying vec4 vColor;
+							varying float z;
+
+							uniform float time;
+
+							void main() {
+
+								vec4 tmpPos = texture2D( texturePosition, reference );
+								vec3 pos = tmpPos.xyz;
+								vec3 velocity = normalize(texture2D( textureVelocity, reference ).xyz);
+
+								vec3 newPosition = position;
+
+								if ( birdVertex == 4.0 || birdVertex == 7.0 ) {
+									// flap wings
+									newPosition.y = sin( tmpPos.w ) * 5.;
+								}
+
+								newPosition = mat3( modelMatrix ) * newPosition;
+
+
+								velocity.z *= -1.;
+								float xz = length( velocity.xz );
+								float xyz = 1.;
+								float x = sqrt( 1. - velocity.y * velocity.y );
+
+								float cosry = velocity.x / xz;
+								float sinry = velocity.z / xz;
+
+								float cosrz = x / xyz;
+								float sinrz = velocity.y / xyz;
+
+								mat3 maty =  mat3(
+									cosry, 0, -sinry,
+									0    , 1, 0     ,
+									sinry, 0, cosry
+
+									);
+
+								mat3 matz =  mat3(
+									cosrz , sinrz, 0,
+									-sinrz, cosrz, 0,
+									0     , 0    , 1
+									);
+
+								newPosition =  maty * matz * newPosition;
+								newPosition += pos;
+								z = newPosition.z;
+								vColor = vec4( birdColor, 1.0 );
+								gl_Position = projectionMatrix *  viewMatrix  * vec4( newPosition, 1.0 );
+							}
+						</script>
+
+						<!-- bird geometry shader -->
+						<script type="x-shader/x-fragment" id="birdFS">
+							varying vec4 vColor;
+							varying float z;
+							uniform vec3 color;
+							void main() {
+								// Fake colors for now
+								float z2 = 0.2 + ( 1000. - z ) / 1000. * vColor.x;
+								gl_FragColor = vec4( z2, z2, z2, 1. );
+							}
+						</script>
+
+						<script src="/static/js/flocking.js"></script>
+
+					</div>
+
 				</div>
-
-			</div>
-
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script>
-			<script src="/static/libs/Detector.js"></script>
-			<script src="/static/libs/SimulationRenderer.js"></script>
-
-			<div id="flocking-container">
-				
-		<!-- pass through vertex shader -->
-		<script id="vertexShader" type="x-shader/x-vertex">
-
-			void main()	{
-
-				gl_Position = vec4( position, 1.0 );
-
-			}
-
-		</script>
-
-		<!-- pass through fragment shader -->
-		<script id="fragmentShader" type="x-shader/x-fragment">
-
-			uniform vec2 resolution;
-			uniform float time;
-			uniform sampler2D texture;
-
-			void main()	{
-
-				vec2 uv = gl_FragCoord.xy / resolution.xy;
-
-				vec3 color = texture2D( texture, uv ).xyz;
-
-				gl_FragColor = vec4( color, 1.0 );
-			}
-
-		</script>
-		<!-- end pass through shaders -->
-
-		<!-- shader for bird's position -->
-		<script id="fragmentShaderPosition" type="x-shader/x-fragment">
-
-			uniform vec2 resolution;
-			uniform float time;
-			uniform float delta;
-			uniform sampler2D textureVelocity;
-			uniform sampler2D texturePosition;
-
-			void main()	{
-
-				vec2 uv = gl_FragCoord.xy / resolution.xy;
-				vec4 tmpPos = texture2D( texturePosition, uv );
-				vec3 position = tmpPos.xyz;
-				vec3 velocity = texture2D( textureVelocity, uv ).xyz;
-
-				float phase = tmpPos.w;
-
-				phase = mod( ( phase + delta +
-					length( velocity.xz ) * delta * 3. +
-					max( velocity.y, 0.0 ) * delta * 6. ), 62.83 );
-
-				gl_FragColor = vec4( position + velocity * delta * 15. , phase );
-
-			}
-
-		</script>
-
-		<!-- shader for bird's velocity -->
-		<script id="fragmentShaderVelocity" type="x-shader/x-fragment">
-
-			uniform vec2 resolution;
-			uniform float time;
-			uniform float testing;
-			uniform float delta; // about 0.016
-			uniform float seperationDistance; // 20
-			uniform float alignmentDistance; // 40
-			uniform float cohesionDistance; //
-			uniform float freedomFactor;
-			uniform vec3 predator;
-
-
-			uniform sampler2D textureVelocity;
-			uniform sampler2D texturePosition;
-
-			const float width = WIDTH;
-			const float height = WIDTH;
-
-			const float PI = 3.141592653589793;
-			const float PI_2 = PI * 2.0;
-			// const float VISION = PI * 0.55;
-
-			float zoneRadius = 40.0;
-			float zoneRadiusSquared = zoneRadius * zoneRadius;
-
-			float separationThresh = 0.45;
-			float alignmentThresh = 0.65;
-
-			const float UPPER_BOUNDS = 400.0;
-			const float LOWER_BOUNDS = -UPPER_BOUNDS;
-
-			const float SPEED_LIMIT = 4.0;
-
-			float rand(vec2 co){
-			    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-			}
-
-			void main()	{
-
-				zoneRadius = seperationDistance + alignmentDistance + cohesionDistance;
-				separationThresh = seperationDistance / zoneRadius;
-				alignmentThresh = ( seperationDistance + alignmentDistance ) / zoneRadius;
-				zoneRadiusSquared = zoneRadius * zoneRadius;
-
-
-				vec2 uv = gl_FragCoord.xy / resolution.xy;
-				vec3 birdPosition, birdVelocity;
-
-				vec3 selfPosition = texture2D( texturePosition, uv ).xyz;
-				vec3 selfVelocity = texture2D( textureVelocity, uv ).xyz;
-
-				float dist;
-				vec3 dir; // direction
-				float distSquared;
-
-				float seperationSquared = seperationDistance * seperationDistance;
-				float cohesionSquared = cohesionDistance * cohesionDistance;
-
-				float f;
-				float percent;
-
-				vec3 velocity = selfVelocity;
-
-				float limit = SPEED_LIMIT;
-
-				dir = predator * UPPER_BOUNDS - selfPosition;
-				dir.z = 0.;
-				// dir.z *= 0.6;
-				dist = length( dir );
-				distSquared = dist * dist;
-
-				float preyRadius = 150.0;
-				float preyRadiusSq = preyRadius * preyRadius;
-
-
-				// move birds away from predator
-				if (dist < preyRadius) {
-
-					f = ( distSquared / preyRadiusSq - 1.0 ) * delta * 100.;
-					velocity += normalize( dir ) * f;
-					limit += 5.0;
-				}
-
-
-				// if (testing == 0.0) {}
-				// if ( rand( uv + time ) < freedomFactor ) {}
-
-
-				// Attract flocks to the center
-				vec3 central = vec3( 0., 0., 0. );
-				dir = selfPosition - central;
-				dist = length( dir );
-
-				dir.y *= 2.5;
-				velocity -= normalize( dir ) * delta * 5.;
-
-				for (float y=0.0;y<height;y++) {
-					for (float x=0.0;x<width;x++) {
-
-						vec2 ref = vec2( x + 0.5, y + 0.5 ) / resolution.xy;
-						birdPosition = texture2D( texturePosition, ref ).xyz;
-
-						dir = birdPosition - selfPosition;
-						dist = length(dir);
-
-						if (dist < 0.0001) continue;
-
-						distSquared = dist * dist;
-
-						if (distSquared > zoneRadiusSquared ) continue;
-
-						percent = distSquared / zoneRadiusSquared;
-
-						if ( percent < separationThresh ) { // low
-
-							// Separation - Move apart for comfort
-							f = (separationThresh / percent - 1.0) * delta;
-							velocity -= normalize(dir) * f;
-
-						} else if ( percent < alignmentThresh ) { // high
-
-							// Alignment - fly the same direction
-							float threshDelta = alignmentThresh - separationThresh;
-							float adjustedPercent = ( percent - separationThresh ) / threshDelta;
-
-							birdVelocity = texture2D( textureVelocity, ref ).xyz;
-
-							f = ( 0.5 - cos( adjustedPercent * PI_2 ) * 0.5 + 0.5 ) * delta;
-							velocity += normalize(birdVelocity) * f;
-
-						} else {
-
-							// Attraction / Cohesion - move closer
-							float threshDelta = 1.0 - alignmentThresh;
-							float adjustedPercent = ( percent - alignmentThresh ) / threshDelta;
-
-							f = ( 0.5 - ( cos( adjustedPercent * PI_2 ) * -0.5 + 0.5 ) ) * delta;
-
-							velocity += normalize(dir) * f;
-
-						}
-
-					}
-
-				}
-
-
-
-				// this make tends to fly around than down or up
-				// if (velocity.y > 0.) velocity.y *= (1. - 0.2 * delta);
-
-				// Speed Limits
-				if ( length( velocity ) > limit ) {
-					velocity = normalize( velocity ) * limit;
-				}
-
-				gl_FragColor = vec4( velocity, 1.0 );
-
-			}
-
-		</script>
-
-		<script type="x-shader/x-vertex" id="birdVS">
-
-			attribute vec2 reference;
-			attribute float birdVertex;
-
-			attribute vec3 birdColor;
-
-			uniform sampler2D texturePosition;
-			uniform sampler2D textureVelocity;
-
-			varying vec4 vColor;
-			varying float z;
-
-			uniform float time;
-
-			void main() {
-
-				vec4 tmpPos = texture2D( texturePosition, reference );
-				vec3 pos = tmpPos.xyz;
-				vec3 velocity = normalize(texture2D( textureVelocity, reference ).xyz);
-
-				vec3 newPosition = position;
-
-				if ( birdVertex == 4.0 || birdVertex == 7.0 ) {
-					// flap wings
-					newPosition.y = sin( tmpPos.w ) * 5.;
-				}
-
-				newPosition = mat3( modelMatrix ) * newPosition;
-
-
-				velocity.z *= -1.;
-				float xz = length( velocity.xz );
-				float xyz = 1.;
-				float x = sqrt( 1. - velocity.y * velocity.y );
-
-				float cosry = velocity.x / xz;
-				float sinry = velocity.z / xz;
-
-				float cosrz = x / xyz;
-				float sinrz = velocity.y / xyz;
-
-				mat3 maty =  mat3(
-					cosry, 0, -sinry,
-					0    , 1, 0     ,
-					sinry, 0, cosry
-
-				);
-
-				mat3 matz =  mat3(
-					cosrz , sinrz, 0,
-					-sinrz, cosrz, 0,
-					0     , 0    , 1
-				);
-
-				newPosition =  maty * matz * newPosition;
-				newPosition += pos;
-				z = newPosition.z;
-				vColor = vec4( birdColor, 1.0 );
-				gl_Position = projectionMatrix *  viewMatrix  * vec4( newPosition, 1.0 );
-			}
-		</script>
-
-		<!-- bird geometry shader -->
-		<script type="x-shader/x-fragment" id="birdFS">
-			varying vec4 vColor;
-			varying float z;
-			uniform vec3 color;
-			void main() {
-				// Fake colors for now
-				float z2 = 0.2 + ( 1000. - z ) / 1000. * vColor.x;
-				gl_FragColor = vec4( z2, z2, z2, 1. );
-			}
-		</script>
-
-		<script src="/static/js/flocking.js"></script>
-
-		</div>
-
-		</div>
 <!-- ================= -->
-		<div id="music">
-			<audio id="player" autoplay loop>
-				<source src="/static/audio/backgroundmusic.mp3" type="audio/mpeg">
-			</audio>
+<div id="music">
+	<audio id="player" autoplay loop>
+		<source src="/static/audio/backgroundmusic.mp3" type="audio/mpeg">
+		</audio>
 
-			<a id="stopmusic">
-				<span>toggle music</span>
-			</a>
-		</div>
-<!-- ================= -->
-
-		<div class="section row text-center" id="balance-sketch-1">
-			<div class="balance-sketch col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-				<canvas class="img-responsive" data-processing-sources="/static/processing/sketch2.pde"></canvas>
-			</div> 
-			<p class="project-caption col-xs-12">
-				<br>
-				<a target="_blank" href="http://thebalance.heroku.com">BALANCE</a> - Path @ 2014 | Interactive Internet Art
-				<br>
-				( full interactive experience on BALANCE site )
+		<a id="stopmusic">
+			<span>toggle music</span>
+		</a>
+	</div>
+	<!-- ================= -->
+	<div class="section row text-center" id="isshamenecessary">
+		<div class="col-xs-12 col-md-6 col-md-offset-3">
+			<img src="/static/img/isshamenecessary/home.png" class="img-responsive">
+			<p class="project-caption">
+			<br>
+			3D interactie website for NYU Profressor <a href="http://jenniferjacquet.com/" target="_blank">Jennifer Jacquet</a>'s new book "Is Shame Necessary".</p>
 			</p>
 		</div>
+	</div>
 
-<!-- ================= -->
-		<div class="row section text-center" id="exhibitgrowth">
-			<img src="/static/img/growth.jpg">
-			<p class="project-caption">
+
+	<!-- ================= -->
+
+	<div class="section row text-center" id="balance-sketch-1">
+		<div class="balance-sketch col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+			<canvas class="img-responsive" data-processing-sources="/static/processing/sketch2.pde"></canvas>
+		</div> 
+		<p class="project-caption col-xs-12">
+			<br>
+			<a target="_blank" href="http://thebalance.heroku.com">BALANCE</a> - Path @ 2014 | Interactive Internet Art
+			<br>
+			( full interactive experience on BALANCE site )
+		</p>
+	</div>
+
+	<!-- ================= -->
+	<div class="row section text-center" id="exhibitgrowth">
+		<img src="/static/img/growth.jpg">
+		<p class="project-caption">
 			<br>
 			<a target="_blank"  href="https://www.umpquabank.com/exhibit">Exhibit:Growth</a> @ 2014 | Interactive Art Installation<br>
 
-	"Exhibit: Growth 	is an interactive, immersive exploration of human potential.<br> Inside a stunning geodesic dome, you’ll choreograph a unique visual expression via large-scale, motion-activated digital technology.<br>
-		The exhibit is created by Umpqua Bank, which is inspired by the potential for growth within us all, both as individuals and as a community."</p>
+			"Exhibit: Growth 	is an interactive, immersive exploration of human potential.<br> Inside a stunning geodesic dome, you’ll choreograph a unique visual expression via large-scale, motion-activated digital technology.<br>
+			The exhibit is created by Umpqua Bank, which is inspired by the potential for growth within us all, both as individuals and as a community."</p>
 		</div> 
 
-<!-- ================= -->
+		<!-- ================= -->
 
 		<div class="row section text-center" id="acalogo">
-		<div class="embed-responsive embed-responsive-16by9">
-		<iframe src="//player.vimeo.com/video/107269618?autoplay=1&loop=1&color=ffffff&title=0&byline=0&portrait=0" class="embed-responsive-item" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-		</div>
+			<div class="embed-responsive embed-responsive-16by9">
+				<iframe src="//player.vimeo.com/video/107269618?autoplay=1&loop=1&color=ffffff&title=0&byline=0&portrait=0" class="embed-responsive-item" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+			</div>
 			<p class="col-xs-12">
-			Art Community Alliance interactive logo @ 2014
+				Art Community Alliance interactive logo @ 2014
 			</p>
 		</div>
 
-<!-- ================= -->
+		<!-- ================= -->
 		<div class="row section text-center" id="websites">
 			<div class="thum-grid col-md-6 col-xs-12 ">
 				<img src="/static/img/lyte.png" >
@@ -416,7 +427,7 @@
 			</p>
 		</div>
 
-<!-- ================= -->
+		<!-- ================= -->
 
 
 		<div class="row section" id="bookofhappiness">
@@ -432,13 +443,13 @@
 			
 			<div class="col-md-6 col-xs-12 col-lg-pull-6 col-md-pull-6 text-right-md text-right-lg text-center-xs text-center-sm">
 				<p><br> <a href="http://www.yangwang.info/works/the-book-of-happiness" target="_blank">
-				Book of Happiness @ 2013</a><br>
-				A notebook, inside which a person’s happy memories are represented and analyzed using Statistical Regression Analysis and Parametric Design.
+					Book of Happiness @ 2013</a><br>
+					A notebook, inside which a person’s happy memories are represented and analyzed using Statistical Regression Analysis and Parametric Design.
 				</p>
 			</div>
 
 		</div>
-<!-- ================= -->
+		<!-- ================= -->
 
 
 		<div class="section row text-center">
@@ -446,14 +457,14 @@
 				<canvas class="img-responsive"  data-processing-sources="/static/processing/Sphere_of_Particles.pde"></canvas>
 			</div> 
 			<p class="project-caption col-xs-12">
-			<br>
-			<a target="_blank" href="http://thebalance.heroku.com">BALANCE</a> - Form @ 2013 | Interactive Internet Art
-			<br>
-			( full interactive experience on BALANCE site )
+				<br>
+				<a target="_blank" href="http://thebalance.heroku.com">BALANCE</a> - Form @ 2013 | Interactive Internet Art
+				<br>
+				( full interactive experience on BALANCE site )
 			</p>
 		</div>
 
-<!-- ================= -->
+		<!-- ================= -->
 
 		<div class="section row text-left" id="graphicdesigns">
 
@@ -474,48 +485,48 @@
 				<img src="/static/img/graphics/richstone.gif">
 				
 				<p>
-				<br>
-				visual identities & posters @ 2013
+					<br>
+					visual identities & posters @ 2013
 				</p>
 			</div>
 		</div>
 
-<!-- ================= -->
-	<div id="about" class="section row"> 
-		<div class="col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-3" id="ywintro">
-		<P> <a target="_blank" href="http://yangwang.info"><span>yw ( yang wang )</a> is a new media artist, designer and creative coder. After he received his degree on artistic design at Beijing, he went to New York to study new media art & interaction design. He now works on using emerging technologies to create a better interaction experience and a more immersive environment to convey the creator's idea.<br></span>
-		</P>
-
-		
+		<!-- ================= -->
+		<div id="about" class="section row"> 
+			<div class="col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-3" id="ywintro">
+				<P> <a target="_blank" href="http://yangwang.info"><span>yw ( yang wang )</a> is a new media artist, designer and creative coder. After he received his degree on artistic design at Beijing, he went to New York to study new media art & interaction design. He now works on using emerging technologies to create a better interaction experience and a more immersive environment to convey the creator's idea.<br></span>
+				</P>
 
 
+
+
+			</div>
+
+
+
+			<div class="col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-0" id="zzintro">
+				<div class="hidden-md hidden-lg hidden-sm">
+					<br><br>
+				</div>
+				<p><a href="http://zhenzhenqi.info" target="_blank"><span>zz ( zhenzhen qi )</a> is a new media artist, researcher, and designer. Her work explores relationships between emerging new media technology and human self-knowledge, and the potential for technology to create new ways to mediate and evolve our encounter with our own behaviors, emotions, and perceptions.</span></p>
+			</div>
 		</div>
 
-		
+		<!-- ================= -->
 
-		<div class="col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-0" id="zzintro">
-		<div class="hidden-md hidden-lg hidden-sm">
-			<br><br>
+		<div class="section row text-center" id="contact">
+			<p>Please direct all inquiries to<br> - hi@zzyw.co - </p>
 		</div>
-		<p><a href="http://zhenzhenqi.info" target="_blank"><span>zz ( zhenzhen qi )</a> is a new media artist, researcher, and designer. Her work explores relationships between emerging new media technology and human self-knowledge, and the potential for technology to create new ways to mediate and evolve our encounter with our own behaviors, emotions, and perceptions.</span></p>
-		</div>
+
+
+		<!-- ================= -->
+
+		<footer>
+			All Rights Reserved © ZZYW LLC
+		</footer>
+		<!-- ================= -->
+
 	</div>
-
-<!-- ================= -->
-
-<div class="section row text-center" id="contact">
-	<p>Please direct all inquiries to<br> - hi@zzyw.co - </p>
-</div>
-
-
-<!-- ================= -->
-
-<footer>
-All Rights Reserved © ZZYW LLC
-</footer>
-<!-- ================= -->
-
-</div>
 
 
 	{% include "trackingcode.html" %}
@@ -524,9 +535,9 @@ All Rights Reserved © ZZYW LLC
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.15/p5.min.js"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/skrollr/0.6.29/skrollr.min.js"></script>
- 	<script src="/static/js/custom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/skrollr/0.6.29/skrollr.min.js"></script>
+	<script src="/static/js/custom.js"></script>
 
 
 </body>
