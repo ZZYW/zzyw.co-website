@@ -24,11 +24,12 @@ a {
 a:hover {
     text-decoration: none;
     background-color: #CCC9CD;
-    color: #fff !important;
+    color: #000 !important;
 }
 
 .section {
     margin: 50vh 0;
+
 }
 
 /*loading page*/
@@ -87,7 +88,11 @@ a:hover {
 #exhibitgrowth img {
     width: 40%;
 }
+#balance-sketch-1{
 
+}
+#exhibitgrowth{
+}
 .balance-sketch {
 	/*margin: 0 auto;*/;
 }
